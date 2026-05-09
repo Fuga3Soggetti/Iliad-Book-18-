@@ -106,6 +106,7 @@
         if (isGreek && el.classList.contains("gloss-english")) {
           el.textContent = greekText;
           el.classList.remove("gloss-english");
+          el.style.minWidth = "";
         }
       }
 
@@ -113,6 +114,7 @@
         if (!isGreek && el.classList.contains("gloss-swapped")) {
           el.textContent = englishWord;
           el.classList.remove("gloss-swapped");
+          el.style.minWidth = "";
         }
       }
 
@@ -136,6 +138,7 @@
       if (isGreek && englishText) {
         el.addEventListener("mouseenter", function () {
           if (el.classList.contains("gloss-active")) return;
+          el.style.minWidth = el.offsetWidth + "px";  // freeze width before swap
           el.textContent = englishText;
           el.classList.add("gloss-english");
         });
@@ -147,6 +150,7 @@
       if (!isGreek && greekSwap) {
         el.addEventListener("mouseenter", function () {
           if (el.classList.contains("gloss-active")) return;
+          el.style.minWidth = el.offsetWidth + "px";  // freeze width before swap
           el.textContent = greekSwap;
           el.classList.add("gloss-swapped");
         });

@@ -1,0 +1,635 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   ILIAD BOOK 18 — Translation Website
+   Design register: Barnett Newman's "Achilles" (1952)
+     Ground: near-black, warm   #100f0d
+     Zip:    white-cream        #f0ead8
+     Text:   off-white          #ddd6c4
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* ── Imports ─────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Cormorant+SC:wght@400;500&display=swap');
+
+/* ── Reset & base ─────────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --ground:      #f2e6cc;   /* papyrus cream — page background */
+  --ground-mid:  #ebe0c4;   /* slightly darker papyrus — nav */
+  --zip:         #5c1a10;   /* Pompeiian red — accent stripe & headings */
+  --zip-dim:     rgba(92, 26, 16, 0.22);
+  --text:        #1e130a;   /* warm near-black */
+  --text-dim:    rgba(30, 19, 10, 0.50);
+  --accent:      #5c1a10;
+  --zip-width:   3px;
+  --zip-right:   56px;
+  --content-max: 680px;
+  --font-body:   'EB Garamond', Georgia, serif;
+  --font-display:'Cormorant SC', 'EB Garamond', serif;
+  --margin-col:  220px;
+  --margin-gap:  36px;
+  --panel-width: 420px;
+}
+
+html {
+  font-size: 18px;
+  background-color: var(--ground);
+  color: var(--text);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  line-height: 1.75;
+  min-height: 100vh;
+  position: relative;
+  /* Right margin wide enough to clear the zip */
+  padding-right: calc(var(--zip-right) + var(--zip-width) + 48px);
+  transition: padding-right 0.25s ease;
+}
+
+body.gloss-open {
+  padding-right: calc(var(--zip-right) + var(--zip-width) + var(--panel-width) + 20px);
+}
+
+/* ── Newman Zip ───────────────────────────────────────────────────────────── */
+
+/* The vertical stripe — fixed, full viewport height */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  right: var(--zip-right);
+  width: var(--zip-width);
+  height: 100vh;
+  background: var(--zip);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ── Navigation ──────────────────────────────────────────────────────────── */
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--ground);
+  border-bottom: 1px solid var(--zip-dim);
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  height: 52px;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+nav a {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+nav a:hover,
+nav a:focus {
+  color: var(--zip);
+  outline: none;
+}
+
+nav .nav-title {
+  margin-right: auto;
+  font-size: 0.76rem;
+  color: var(--text);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+/* ── Page layout ─────────────────────────────────────────────────────────── */
+
+main {
+  max-width: 976px; /* margin-col(220) + gap(36) + content(624) + h-padding(96) */
+  margin: 0 auto;
+  padding: 80px 48px 120px;
+}
+
+/* ── Header / title block ─────────────────────────────────────────────────── */
+
+header.poem-header {
+  margin-bottom: 72px;
+  margin-left: calc(var(--margin-col) + var(--margin-gap));
+}
+
+header.poem-header .book-label {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #4e6b7a;   /* fresco blue — Achilles Skyros garment pigment */
+  display: block;
+  margin-bottom: 18px;
+}
+
+header.poem-header h1 {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--zip);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+header.poem-header .subtitle {
+  font-style: italic;
+  font-size: 1rem;
+  color: #4e6b7a;
+}
+
+.attribution {
+  font-size: 0.82rem;
+  color: #4e6b7a;
+  margin-top: 14px;
+  letter-spacing: 0.02em;
+}
+
+.attribution-greek {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: #4e6b7a;
+  margin-top: 6px;
+  letter-spacing: 0.03em;
+}
+
+.attribution-latin {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: #4e6b7a;
+  margin-top: 4px;
+  letter-spacing: 0.03em;
+}
+
+/* Zip-echo removed */
+
+/* ── Section headings ─────────────────────────────────────────────────────── */
+
+.section-label {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  display: block;
+  margin-bottom: 10px;
+  margin-top: 64px;
+}
+
+h2.section-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--zip);
+  letter-spacing: 0.06em;
+  margin-bottom: 32px;
+}
+
+/* ── Section grid — labels left, verse right ─────────────────────────────── */
+
+section {
+  display: grid;
+  grid-template-columns: var(--margin-col) var(--margin-gap) 1fr;
+  align-items: start;
+}
+
+/* ── Verse / translation text ─────────────────────────────────────────────── */
+
+.verse-block {
+  grid-column: 3;
+  margin-bottom: 0.4em;
+}
+
+.verse-speech {
+  grid-column: 3;
+}
+
+.sub-break {
+  grid-column: 3;
+}
+
+.verse-block p,
+.verse-speech p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 0;
+}
+
+/* Line numbers — shared rule for narration and speech */
+.verse-block p::before,
+.verse-speech p::before {
+  content: attr(data-line);
+  display: inline-block;
+  width: 3.5em;
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  letter-spacing: 0.10em;
+  color: var(--text-dim);
+  vertical-align: baseline;
+  user-select: none;
+  padding-right: 0.4em;
+  text-align: right;
+}
+
+/* English translation line numbers — right margin, every 5 lines */
+.trans-linenum {
+  float: right;
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  letter-spacing: 0.10em;
+  color: #4e6b7a;
+  user-select: none;
+  margin-left: 1.5em;
+  line-height: inherit;
+}
+
+/* Speech / indented lines */
+.verse-speech {
+  margin: 0 0 0 1.8em;
+}
+
+/* Subsection break — between sub-sections */
+.sub-break {
+  height: 2.4em;
+}
+
+/* Stanza break — within a verse block */
+.stanza-break {
+  height: 1.2em;
+}
+
+/* Part break — between ## parts */
+.part-break {
+  height: 4em;
+  border-top: 1px solid var(--zip-dim);
+  margin-top: 2em;
+}
+
+
+/* Part header — left margin column */
+.part-header {
+  grid-column: 1;
+  text-align: right;
+  padding-right: 16px;
+  padding-bottom: 20px;
+  margin: 0;
+}
+
+.part-header .part-num {
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--zip);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.part-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--zip);
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+}
+
+/* Sub-section header — left margin column */
+.sub-header {
+  grid-column: 1;
+  text-align: right;
+  padding-right: 16px;
+  margin: 0;
+}
+
+.sub-header .sub-label {
+  font-family: var(--font-display);
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--zip);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.sub-header h3 {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--zip);
+  letter-spacing: 0.04em;
+  font-style: italic;
+  line-height: 1.3;
+}
+
+/* ── Glossary terms (in-text) ─────────────────────────────────────────────── */
+
+.gloss-term {
+  color: var(--zip);
+  border-bottom: 1px solid rgba(92, 26, 16, 0.45);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  text-decoration: none;
+  outline: none;
+  font-style: inherit;
+}
+
+.gloss-term:hover,
+.gloss-term:focus {
+  border-bottom-color: var(--zip);
+}
+
+.gloss-term.gloss-active {
+  color: #f2e8d0;          /* cream text on red highlight */
+  background: var(--zip);
+  border-radius: 1px;
+  border-bottom-color: transparent;
+  padding: 0 2px;
+}
+
+
+/* Greek text in body */
+span[lang="grc"] {
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* When a Greek word is showing its English equivalent on hover,
+   normalise the font style so it reads as plain English */
+[lang="grc"].gloss-term.gloss-english {
+  font-style: normal;
+  letter-spacing: 0.01em;
+}
+
+/* When an English gloss word is showing its Greek equivalent on hover,
+   italicise — the scholarly convention for Greek in running text */
+.gloss-term.gloss-swapped {
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
+/* ── Glossary side panel ──────────────────────────────────────────────────── */
+
+#gloss-panel {
+  position: fixed;
+  top: 52px; /* below nav */
+  right: 0;
+  width: var(--panel-width);
+  height: calc(100vh - 52px);
+  background: #6e2016;              /* Pompeiian red — preserved */
+  border-left: var(--zip-width) solid #f0e4c0;  /* cream border */
+  padding: 28px 24px 24px 22px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+  z-index: 900;
+}
+
+#gloss-panel.visible {
+  transform: translateX(0);
+}
+
+/* ── Panel header: painting + title overlay ──────────────────────────────── */
+
+#gloss-panel-header {
+  position: relative;
+  /* bleed past the panel's padding on top, left, right */
+  width: calc(100% + 46px);          /* 22px left + 24px right */
+  margin: -28px -24px 24px -22px;
+  height: 170px;
+  overflow: hidden;
+}
+
+#gloss-panel-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;       /* richest red zone */
+}
+
+#gloss-panel-title {
+  position: absolute;
+  bottom: 18px;
+  left: 22px;                        /* re-align with panel content */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  /* subtle shadow so text reads on any part of the image */
+  text-shadow: 0 1px 6px rgba(0,0,0,0.55);
+}
+
+#gloss-panel-title .title-en {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #f0e4c0;
+  line-height: 1;
+}
+
+#gloss-panel-title .title-grc {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.88rem;
+  letter-spacing: 0.06em;
+  color: rgba(240, 228, 192, 0.78);
+  line-height: 1;
+}
+
+#gloss-panel-close {
+  position: absolute;
+  top: 10px;
+  left: 22px;                        /* upper-left of panel header */
+  background: none;
+  border: none;
+  color: rgba(242, 232, 208, 0.80);  /* cream on red panel */
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 6px;
+  transition: color 0.15s;
+  z-index: 10;                       /* sits above the image */
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+#gloss-panel-close:hover {
+  color: #f0e4c0;                    /* bright cream on hover */
+}
+
+.gloss-field {
+  display: grid;
+  grid-template-columns: 9em 1fr;
+  gap: 4px 10px;
+  margin-bottom: 10px;
+  align-items: start;
+}
+
+.gloss-field:last-child {
+  margin-bottom: 0;
+}
+
+.gloss-label {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(242, 232, 208, 0.55);  /* cream-dim on red panel */
+  padding-top: 3px;
+}
+
+.gloss-value {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: #f2e8d0;                    /* cream on red panel */
+}
+
+.gloss-greek {
+  font-size: 1rem;
+  font-style: italic;
+  color: #f0e4c0;                    /* gold-cream on red panel */
+  letter-spacing: 0.03em;
+}
+
+/* ── Translator's note block ──────────────────────────────────────────────── */
+
+.translators-note {
+  margin-top: 72px;
+  margin-left: calc(var(--margin-col) + var(--margin-gap));
+  padding-top: 28px;
+  border-top: 1px solid var(--zip-dim);
+}
+
+.translators-note h3 {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #4e6b7a;
+  margin-bottom: 16px;
+}
+
+.translators-note p {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #4e6b7a;
+  font-style: italic;
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+
+footer {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 48px 64px;
+  border-top: 1px solid var(--zip-dim);
+}
+
+footer p {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding-top: 28px;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 720px) {
+  :root {
+    --zip-right:  28px;
+    --margin-col: 155px;
+    --margin-gap: 20px;
+    --panel-width: 360px;
+  }
+
+  body {
+    padding-right: calc(var(--zip-right) + var(--zip-width) + 24px);
+  }
+
+  nav {
+    padding: 0 20px;
+    gap: 24px;
+  }
+
+  main {
+    padding: 48px 20px 80px;
+  }
+
+  footer {
+    padding: 0 20px 48px;
+  }
+
+  header.poem-header h1 {
+    font-size: 1.9rem;
+  }
+
+  header.poem-header,
+  .translators-note {
+    margin-left: calc(var(--margin-col) + var(--margin-gap));
+  }
+
+  #gloss-panel {
+    width: var(--panel-width);
+  }
+
+  .gloss-field {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --zip-right: 16px;
+  }
+
+  section {
+    display: block;
+  }
+
+  .part-header,
+  .sub-header {
+    text-align: left;
+    padding-right: 0;
+    margin-bottom: 8px;
+  }
+
+  header.poem-header,
+  .translators-note {
+    margin-left: 0;
+  }
+
+  #gloss-panel {
+    width: 100vw;
+    border-left: none;
+    border-top: var(--zip-width) solid #f0e4c0;  /* cream on red panel */
+  }
+}

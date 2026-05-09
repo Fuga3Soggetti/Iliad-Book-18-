@@ -1,0 +1,5 @@
+# Working notes — not part of the website
+*.md
+
+# macOS
+.DS_Store
